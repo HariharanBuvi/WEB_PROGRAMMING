@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Ajax Application</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#loadText").click(function() {
+                $.ajax({
+                    url: "data.txt",
+                    method: "GET",
+                    success: function(response) {
+                        $("#output").html("<p>" + response + "</p>");
+                    },
+                    error: function() {
+                        $("#output").html("<p>Sorry, an error occurred.</p>");
+                    }
+                });
+            });
+
+            $("#submitForm").click(function() {
+                let name = $("#name").val();
+                let message = $("#message").val();
+
+                $.ajax({
+                    url: "submit.php",
+                    method: "POST",
+                    data: { name: name, message: message },
+                    success: function(response) {
+                        $("#formResult").html("<b>Server Says: </b>" + response);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Load Data with Ajax</h2>
+    <button id="loadText">Load Text</button>
+    <div id="output"></div>
+
+    <h2>Submit Form Data with Ajax</h2>
+    <input type="text" id="name" placeholder="Your Name"><br>
+    <input type="text" id="message" placeholder="Your Message"><br>
+    <button id="submitForm">Submit</button>
+    <div id="formResult"></div>
+</body>
+</html>
